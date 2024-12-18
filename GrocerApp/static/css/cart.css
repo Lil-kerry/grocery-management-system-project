@@ -1,0 +1,134 @@
+/* General container styling */
+.cart-content {
+    max-width: 1000px;
+    margin: 100px auto 50px; /* Increased top margin to avoid overlap with header */
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    display: block; /* Ensure the cart content is visible */
+}
+
+/* Heading styling */
+.cart-content h1 {
+    text-align: center;
+    font-size: 3rem; /* Increased font size */
+    margin-bottom: 20px;
+    color: #333;
+    display: block; /* Ensure the heading is visible */
+    font-weight: bold; /* Make the heading bold */
+}
+
+/* Table styling */
+.cart-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.cart-content table th,
+.cart-content table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 1.2rem; /* Increased font size for better readability */
+}
+
+.cart-content table th {
+    background-color: #f8f8f8;
+    font-weight: bold;
+}
+
+/* Product image styling */
+.cart-content .product-image {
+    width: 100px;
+    height: 50px;
+    border-radius: 5px;
+}
+
+/* Button styling */
+.cart-content .btn,
+.cart-content .delete-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 5px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    text-align: center;
+}
+
+.cart-content .delete-btn {
+    background-color: #dc3545; /* Red background for delete button */
+}
+
+.cart-content .delete-btn:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+.cart-content .btn:hover {
+    background-color: #218838;
+}
+
+/* Cart icon count styling */
+#cart-count {
+    background-color: red;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 0.8rem;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .cart-content {
+        padding: 10px;
+        margin: 20px;
+    }
+
+    .cart-content h1 {
+        font-size: 1.5rem;
+    }
+
+    .cart-content table th,
+    .cart-content table td {
+        font-size: 1rem;
+        padding: 8px 10px;
+    }
+
+    .cart-content .btn {
+        font-size: large;
+        padding: 8px 15px;
+    }
+}
+
+.icons {
+    display: flex;
+    align-items: center;
+    position: relative; /* Ensure positioning context for child elements */
+}
+
+#cart-btn {
+    position: relative; /* Ensure the count is positioned relative to the cart icon */
+}
+
+#cart-count {
+    background-color: red;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 50%;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 0.8rem;
+    line-height: 1;
+}
+

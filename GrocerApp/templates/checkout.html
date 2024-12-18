@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+</head>
+<body>
+<header class="header">
+    <a href="{% url 'index' %}" class="logo"> <i class="fas fa-shopping-basket"></i>grocery</a>
+
+    <nav class="navbar">
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'features' %}">Features</a>
+        <a href="{% url 'products' %}">Products</a>
+        <a href="{% url 'categories' %}">Categories</a>
+        <a href="{% url 'reviews' %}">Reviews</a>
+        <a href="{% url 'blogs' %}">Blogs</a>
+    </nav>
+
+    <div class="icons">
+        <div class="fas fa-bars" id="menu-btn"></div>
+        <div class="fas fa-search" id="search-btn"></div>
+        <a href="{% url 'cart' %}" class="icon-link"><div class="fas fa-shopping-cart" id="cart-btn"></div></a>
+        <a href="{% url 'login' %}" class="icon-link"><div class="fas fa-user" id="login-btn"></div></a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}" class="icon-link"><div class="fas fa-sign-out-alt" id="logout-btn"></div></a>
+        {% endif %}
+    </div>
+
+    <form action="" class="search-form">
+        <input type="search" id="search-box" placeholder="search here...">
+        <label for="search-box" class="fas fa-search"></label>
+    </form>
+
+    <form action="{% url 'login' %}" method="post" class="login-form">
+        {% csrf_token %}
+        <h3>login now</h3>
+        <input type="email" placeholder="your email" class="box" required>
+        <input type="password" placeholder="your password" class="box" required>
+        <p>forgot your password <a href="#">click here</a></p>
+        <p>don't have an account <a href="sign up.html">create now</a></p>
+        <input type="submit" value="login now" class="btn">
+    </form>
+</header>
+
+
+
+    <div class="container">
+        <h1>Checkout</h1>
+
+        <form id="checkout-form" action="{% url 'checkout' %}" method="post" class="checkout-form">
+            {% csrf_token %}
+            <!-- Contact Information -->
+            <div class="form-section">
+                <label for="phone_number">Phone Number (for Mobile Pay):</label>
+                <input type="text" name="phone_number" id="phone_number" class="box" placeholder="Enter your phone number" required>
+                <label for="email">Email Address:</label>
+                <input type="email" name="email" id="email" class="box" placeholder="Enter your email" required>
+            </div>
+            <!-- Amount Information -->
+            <div class="form-section">
+                <label for="amount">Amount:</label>
+                <input type="number" name="amount" id="amount" class="box" placeholder="Enter the amount" required>
+            </div>
+            <!-- Payment Method -->
+            <div class="form-section">
+                <label for="payment-method">Select Payment Method:</label>
+                <select id="payment-method" name="payment_method" class="box" required>
+                    <option value="mpesa">M-Pesa</option>
+                    <option value="airtel">Airtel Money</option>
+                    <option value="card">Credit/Debit Card</option>
+                </select>
+            </div>
+
+            <div id="card-payment-fields" class="form-section" style="display: none;">
+                <label for="card-number">Card Number:</label>
+                <input type="text" id="card-number" class="box" placeholder="Enter card number">
+                <label for="card-expiry">Expiry Date:</label>
+                <input type="text" id="card-expiry" class="box" placeholder="MM/YY">
+                <label for="card-cvc">CVC:</label>
+                <input type="text" id="card-cvc" class="box" placeholder="Enter card CVC">
+            </div>
+
+            <button type="submit" class="btn">Place Order</button>
+
+            <div id="loading-spinner" style="display: none;">
+                <img src="{% static 'images/loading-7528_128.gif' %}" alt="Loading...">
+            </div>
+        </form>
+
+    </div>
+
+
+  <section class="footer">
+    <div class="box-container">
+        <div class="box">
+            <h3>grocery <i class="fas fa-shopping-basket"></i></h3>
+            <p>Reach us out on different platforms</p>
+            <div class="share">
+                <a href="#" class="fab fa-facebook-f"></a>
+                <a href="#" class="fab fa-twitter"></a>
+                <a href="#" class="fab fa-instagram"></a>
+                <a href="#" class="fab fa-linkedin"></a>
+            </div>
+        </div>
+        <div class="box">
+            <h3>contact info</h3>
+            <a href="tel:+254797378655" class="links"><i class="fas fa-phone"></i> +254797378655</a>
+            <a href="tel:+254747973786" class="links"><i class="fas fa-phone"></i> +254747973786</a>
+            <a href="mailto:lisahkerubo410@gmail.com" class="links"><i class="fas fa-envelope"></i> lisahkerubo410@gmail.com</a>
+            <a href="#" class="links"><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya - 00100</a>
+        </div>
+        <div class="box">
+            <h3>quick links</h3>
+            <a href="{% url 'index' %}" class="links"><i class="fas fa-arrow-right"></i> Home</a>
+            <a href="{% url 'features' %}" class="links"><i class="fas fa-arrow-right"></i> Features</a>
+            <a href="{% url 'products' %}" class="links"><i class="fas fa-arrow-right"></i> Products</a>
+            <a href="{% url 'categories' %}" class="links"><i class="fas fa-arrow-right"></i> Categories</a>
+            <a href="{% url 'reviews' %}" class="links"><i class="fas fa-arrow-right"></i> Reviews</a>
+            <a href="{% url 'blogs' %}" class="links"><i class="fas fa-arrow-right"></i> Blogs</a>
+        </div>
+        <div class="box">
+            <h3>newsletter</h3>
+            <p>subscribe for latest updates</p>
+            <form id="subscribe-form" method="post">
+                {% csrf_token %}
+                <input type="email" name="email" placeholder="your email" class="email" required>
+                <input type="submit" value="Subscribe" class="btn">
+            </form>
+            <img src="{% static 'images/IMG_6091.jpg' %}" class="payment-img" alt="">
+        </div>
+    </div>
+</section>
+
+
+    <script src="{% static 'js/checkout.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+
+</body>
+</html>

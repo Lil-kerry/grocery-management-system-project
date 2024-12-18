@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout Success</title>
+    <link rel="stylesheet" href=" https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+     <link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+     <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/checkout_success.css' %}">
+    <style>
+        body {
+            background-image: url('{% static "images/banner.jpg" %}');
+            background-size: cover;
+            background-position: center;
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <!-- Your existing header content -->
+    </header>
+
+    <div class="container">
+        <h1>Thank you for your purchase!</h1>
+        <p>Your order has been successfully processed.</p>
+        <a href="{% url 'index' %}" class="btn">Go to Home</a>
+    </div>
+
+    <section class="footer">
+        <!-- Your existing footer content -->
+    </section>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

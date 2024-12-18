@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Search</title>
+    <style>
+        /* Basic styling */
+        #results-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .product-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            width: 200px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .product-card h3 {
+            font-size: 1.2em;
+            margin: 10px 0 5px;
+        }
+
+        .product-card p {
+            font-size: 0.9em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Product Search</h1>
+
+    <!-- Search Input -->
+    <input type="text" id="search-input" placeholder="Search for products..." oninput="searchProducts()">
+
+    <!-- Results Container -->
+    <div id="results-container"></div>
+
+    <!-- Script for AJAX -->
+    <script>
+        function searchProducts() {
+            const query = document.getElementById('search-input').value;
+            const resultsContainer = document.getElementById('results-container');
+
+            if (query.trim() === '') {
+                resultsContainer.innerHTML = ''; // Clear results if query is empty
+                return;
+            }
+
+            // Send AJAX request to search_item endpoint
+            fetch('/search_item/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}', // Ensure CSRF token is included
+                },
+                body: JSON.stringify({ query: query }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const results = data.results;
+                    resultsContainer.innerHTML = ''; // Clear previous results
+
+                    if (results.length > 0) {
+                        // Loop through results and display products
+                        results.forEach(product => {
+                            const productCard = `
+                                <div class="product-card">
+                                    <img src="${product.image}" alt="${product.name}">
+                                    <h3>${product.name}</h3>
+                                    <p>Price: ${product.price}</p>
+                                </div>
+                            `;
+                            resultsContainer.innerHTML += productCard;
+                        });
+                    } else {
+                        resultsContainer.innerHTML = '<p>No products found.</p>';
+                    }
+                } else {
+                    resultsContainer.innerHTML = `<p>${data.message}</p>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                resultsContainer.innerHTML = '<p>An error occurred while fetching results.</p>';
+            });
+        }
+    </script>
+</body>
+</html>

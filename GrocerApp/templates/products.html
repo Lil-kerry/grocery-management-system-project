@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" href=" https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/modal.css' %}">
+</head>
+<body>
+<header class="header">
+    <a href="{% url 'index' %}" class="logo"> <i class="fas fa-shopping-basket"></i>grocery</a>
+    <nav class="navbar">
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'features' %}">Features</a>
+        <a href="{% url 'products' %}">Products</a>
+        <a href="{% url 'categories' %}">Categories</a>
+        <a href="{% url 'reviews' %}">Reviews</a>
+        <a href="{% url 'blogs' %}">Blogs</a>
+    </nav>
+    <div class="icons">
+        <div class="fas fa-bars" id="menu-btn"></div>
+        <div class="fas fa-search" id="search-btn"></div>
+        <a href="{% url 'cart' %}" class="icon-link"><div class="fas fa-shopping-cart" id="cart-btn"></div></a>
+        <a href="{% url 'login' %}" class="icon-link"><div class="fas fa-user" id="login-btn"></div></a>
+    </div>
+    <!-- Search Form -->
+    <form class="search-form" id="globalSearchForm" method="post">
+        {% csrf_token %}
+        <input type="search" id="search-box" placeholder="search here..." required>
+        <button type="button" class="fas fa-search" id="globalSearchButton"></button>
+    </form>
+
+    <!-- Results Display (Modal) -->
+    <div id="search-results-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="results-container"></div>
+        </div>
+    </div>
+</header>
+
+<section class="products" id="products">
+    <h1 class="heading"> our <span>products</span></h1>
+    <div class="swiper product-slider">
+        <div class="swiper-wrapper">
+            {% for product in products %}
+            <div class="swiper-slide box" data-name="{{ product.name }}">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% else %}
+                    <img src="{% static 'images/default.jpg' %}" alt="Default Image">
+                {% endif %}
+                <h3>{{ product.name }}</h3>
+                <div class="price">Ksh {{ product.price }}</div>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <a href="{% url 'add_to_cart' product.id %}" class="btn">add to cart</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="footer">
+    <div class="box-container">
+        <div class="box">
+            <h3>grocery <i class="fas fa-shopping-basket"></i></h3>
+            <p>Reach us out on different platforms</p>
+            <div class="share">
+                <a href="#" class="fab fa-facebook-f"></a>
+                <a href="#" class="fab fa-twitter"></a>
+                <a href="#" class="fab fa-instagram"></a>
+                <a href="#" class="fab fa-linkedin"></a>
+            </div>
+        </div>
+        <div class="box">
+            <h3>contact info</h3>
+            <a href="#" class="links"><i class="fas fa-phone"></i> +254797378655</a>
+            <a href="#" class="links"><i class="fas fa-phone"></i> +254747973786</a>
+            <a href="#" class="links"><i class="fas fa-envelope"></i> lisahkerubo410@gmail.com</a>
+            <a href="#" class="links"><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya - 00100</a>
+        </div>
+        <div class="box">
+            <h3>quick links</h3>
+            <a href="{% url 'index' %}" class="links"><i class="fas fa-arrow-right"></i> Home</a>
+            <a href="{% url 'features' %}" class="links"><i class="fas fa-arrow-right"></i> Features</a>
+            <a href="{% url 'products' %}" class="links"><i class="fas fa-arrow-right"></i> Products</a>
+            <a href="{% url 'categories' %}" class="links"><i class="fas fa-arrow-right"></i> Categories</a>
+            <a href="{% url 'reviews' %}" class="links"><i class="fas fa-arrow-right"></i> Reviews</a>
+            <a href="{% url 'blogs' %}" class="links"><i class="fas fa-arrow-right"></i> Blogs</a>
+        </div>
+        <div class="box">
+            <h3>newsletter</h3>
+            <p>subscribe for latest updates</p>
+            <form id="subscribe-form" method="post">
+                {% csrf_token %}
+                <input type="email" name="email" placeholder="your email" class="email" required>
+                <input type="submit" value="Subscribe" class="btn">
+            </form>
+            <img src="{% static 'images/IMG_6091.jpg' %}" class="payment-img" alt="">
+        </div>
+    </div>
+</section>
+
+<script src=" https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="{% static 'js/script.js' %}"></script>
+<script src="{% static 'js/search.js' %}"></script>
+</body>
+</html>
